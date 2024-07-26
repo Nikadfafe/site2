@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import EthereumProvider from '@walletconnect/ethereum-provider';
 
-const ERC20_ABI = [
+const ERC20_ABI: readonly any[] = [
     // Здесь должен быть ваш ABI
 ];
-
 function WalletConnection({ provider, account, balance, onConnect, onDisconnect }) {
     return (
         <div>
