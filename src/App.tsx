@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import EthereumProvider from '@walletconnect/ethereum-provider';
 
 const ERC20_ABI: any[] = [
-    // Здесь должен быть ваш ABI
+  // Ваш ABI здесь
 ];
 
 function App() {
