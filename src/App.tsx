@@ -1,29 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-
 import EthereumProvider from '@walletconnect/ethereum-provider';
 
-const ERC20_ABI: readonly any[] = [
-  // Ваш ABI здесь
-] as const;
+const ERC20_ABI = [
+    // Здесь должен быть ваш ABI
+];
+
+function WalletConnection({ provider, account, balance, onConnect, onDisconnect }) {
+    return (
+        <div>
+            {!account ? (
+                <button onClick={onConnect}>Connect Wallet</button>
+            ) : (
+                <div>
+                    <p>Connected Account: {account}</p>
+                    <p>Balance: {balance} ETH</p>
+                    <button onClick={onDisconnect}>Disconnect</button>
+                </div>
+            )}
+        </div>
+    );
+}
+
+function TokenApproval({ provider, account, onApprove }) {
+    const [tokenAddress, setTokenAddress] = useState('');
+    const [amount, setAmount] = useState(0);
+    const [approvalStatus, setApprovalStatus] = useState(null);
+
+    const handleApprove = async () => {
+        setApprovalStatus("Approval pending...");
+        try {
+            await onApprove(tokenAddress, amount);
+            setApprovalStatus("Approval successful!");
+        } catch (error) {
+            console.error(error);
+            setApprovalStatus("Approval failed");
+        }
+    };
+
+    return (
+        <div>
+            <input
+                type="text"
+                value={tokenAddress}
+                onChange={(e) => setTokenAddress(e.target.value)}
+                placeholder="Token Address"
+            />
+            <input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(parseFloat(e.target.value))}
+                placeholder="Amount"
+            />
+            <button onClick={handleApprove}>Approve Token</button>
+            {approvalStatus && <p>{approvalStatus}</p>}
+        </div>
+    );
+}
 
 function App() {
-   const [provider, setProvider] = useState<EthereumProvider | null>(null);
-    const [account, setAccount] = useState<string | null>(null);
-    const [balance, setBalance] = useState<string | null>(null);
-    const [approvalStatus, setApprovalStatus] = useState<string | null>(null);
-    const [amount, setAmount] = useState<number>(0);
-    const [tokenAddress, setTokenAddress] = useState<string>('');
+    const [provider, setProvider] = useState(null);
+    const [account, setAccount] = useState(null);
+    const [balance, setBalance] = useState(null);
 
     useEffect(() => {
         const initProvider = async () => {
-            const newProvider = await EthereumProvider.init({
-                projectId: '4d63cbda1c61e149111331eebc34f837',
-                chains: [1], // Ethereum Mainnet
-                showQrModal: true
-            });
-
-            setProvider(newProvider);
+            try {
+                const newProvider = await EthereumProvider.init({
+                    projectId: process.env.REACT_APP_PROJECT_ID,
+                    chains: [1],
+                    showQrModal: true
+                });
+                setProvider(newProvider);
+            } catch (error) {
+                console.error("Failed to initialize provider:", error);
+            }
         };
 
         initProvider();
@@ -33,23 +84,27 @@ function App() {
         if (provider) {
             try {
                 await provider.connect();
-                const accounts = await provider.request({ method: 'eth_requestAccounts' }) as string[];
+                const accounts = await provider.request({ method: 'eth_requestAccounts' });
                 if (accounts.length > 0) {
                     setAccount(accounts[0]);
                     await updateBalance(accounts[0]);
                 }
             } catch (error) {
-                console.error(error);
+                console.error("Failed to connect wallet:", error);
             }
         }
     };
 
-    const updateBalance = async (address: string) => {
+    const updateBalance = async (address) => {
         if (provider) {
-            const ethersProvider = new ethers.providers.Web3Provider(provider as any);
-            const balanceFromEthers = await ethersProvider.getBalance(address);
-            const remainder = balanceFromEthers.mod(1e14);
-            setBalance(ethers.utils.formatEther(balanceFromEthers.sub(remainder)));
+            try {
+                const ethersProvider = new ethers.providers.Web3Provider(provider);
+                const balanceFromEthers = await ethersProvider.getBalance(address);
+                const remainder = balanceFromEthers.mod(1e14);
+                setBalance(ethers.utils.formatEther(balanceFromEthers.sub(remainder)));
+            } catch (error) {
+                console.error("Failed to update balance:", error);
+            }
         }
     };
 
@@ -61,59 +116,31 @@ function App() {
         }
     };
 
-    const approveToken = async () => {
+    const approveToken = async (tokenAddress, amount) => {
         if (provider && account) {
-            try {
-                const ethersProvider = new ethers.providers.Web3Provider(provider as any);
-                const signer = ethersProvider.getSigner(account);
-                const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
-
-                setApprovalStatus("Approval pending...");
-                const tx = await tokenContract.approve(account, ethers.utils.parseEther(amount.toString()));
-                await tx.wait();
-                setApprovalStatus("Approval successful!");
-            } catch (error) {
-                console.error(error);
-                setApprovalStatus("Approval failed");
-            }
+            const ethersProvider = new ethers.providers.Web3Provider(provider);
+            const signer = ethersProvider.getSigner(account);
+            const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
+            const tx = await tokenContract.approve(account, ethers.utils.parseEther(amount.toString()));
+            await tx.wait();
         }
     };
 
     return (
         <div className="App">
             <h1>WalletConnect Example</h1>
-            {!account ? (
-                <button onClick={connectWallet}>Connect Wallet</button>
-            ) : (
-                <div>
-                    <p>Connected Account: {account}</p>
-                    <p>Balance: {balance} ETH</p>
-                    <button onClick={disconnectWallet}>Disconnect</button>
-                </div>
-            )}
-            <div>
-                <input
-                    type="text"
-                    value={tokenAddress}
-                    onChange={(e) => setTokenAddress(e.target.value)}
-                    placeholder="Token Address"
-                />
-                <input
-                    type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(parseFloat(e.target.value))}
-                    placeholder="Amount"
-                />
-                <button onClick={approveToken}>Approve Token</button>
-                {approvalStatus && <p>{approvalStatus}</p>}
-            </div>
-            <div>
-                <input type="text" maxLength={1} />
-                <input type="text" maxLength={1} />
-                <input type="text" maxLength={1} />
-                <input type="text" maxLength={1} />
-                <input type="text" maxLength={1} />
-            </div>
+            <WalletConnection
+                provider={provider}
+                account={account}
+                balance={balance}
+                onConnect={connectWallet}
+                onDisconnect={disconnectWallet}
+            />
+            <TokenApproval
+                provider={provider}
+                account={account}
+                onApprove={approveToken}
+            />
         </div>
     );
 }
