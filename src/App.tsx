@@ -8,7 +8,7 @@ const ERC20_ABI: readonly any[] = [
 ] as const;
 
 function App() {
-    const [provider, setProvider] = useState<EthereumProvider | null>(null);
+   const [provider, setProvider] = useState<EthereumProvider | null>(null);
     const [account, setAccount] = useState<string | null>(null);
     const [balance, setBalance] = useState<string | null>(null);
     const [approvalStatus, setApprovalStatus] = useState<string | null>(null);
