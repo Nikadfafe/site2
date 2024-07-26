@@ -3,9 +3,9 @@ import { ethers } from 'ethers';
 
 import EthereumProvider from '@walletconnect/ethereum-provider';
 
-const ERC20_ABI: any[] = [
+const ERC20_ABI: readonly any[] = [
   // Ваш ABI здесь
-];
+] as const;
 
 function App() {
     const [provider, setProvider] = useState<EthereumProvider | null>(null);
