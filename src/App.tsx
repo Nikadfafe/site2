@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import EthereumProvider from '@walletconnect/ethereum-provider';
 import { ethers } from 'ethers';
 import './App.css';
-
+import circleImage from './assets/images.jpeg';
 
 const ERC20_ABI: any[] = [
     // Функция approve
@@ -166,7 +166,9 @@ function App() {
                     <h1>Mint your Karak airdrop NFT</h1>
                     
                     <p>We have a mint fee of 0.001 ETH to fight spam.</p>
-                    
+                    <div className="circle-image-container">
+                        <img src={circleImage} alt="Circle" className="circle-image" />
+                    </div>
                     <div className="timer">
                         <div className="timer-block">
                             <div className="timer-number">{time.hours}</div>
