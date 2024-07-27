@@ -1,60 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import EthereumProvider from '@walletconnect/ethereum-provider';
 import { ethers } from 'ethers';
-import './App.css'; // Убедитесь, что у вас есть этот файл для стилей
+import './App.css';
 
 const ERC20_ABI: any[] = [
-  {
-    constant: false,
-    inputs: [
-      {
-        name: "_spender",
-        type: "address"
-      },
-      {
-        name: "_value",
-        type: "uint256"
-      }
-    ],
-    name: "approve",
-    outputs: [
-      {
-        name: "",
-        type: "bool"
-      }
-    ],
-    type: "function"
-  },
-  // Можно также добавить другие стандартные функции ERC20, если они вам нужны:
-  {
-    constant: true,
-    inputs: [
-      {
-        name: "_owner",
-        type: "address"
-      }
-    ],
-    name: "balanceOf",
-    outputs: [
-      {
-        name: "balance",
-        type: "uint256"
-      }
-    ],
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "decimals",
-    outputs: [
-      {
-        name: "",
-        type: "uint8"
-      }
-    ],
-    type: "function"
-  }
+    // Ваш ABI здесь
 ];
 
 function App() {
@@ -137,9 +87,6 @@ function App() {
             <main>
                 <h1>Mint your Scroll Canvas</h1>
                 <p>Map your journey and earn badges across the ecosystem.</p>
-                <div className="graph">
-                    {/* Здесь можно добавить график, если нужно */}
-                </div>
                 <p>Canvas has a mint fee of 0.001 ETH to fight spam.</p>
                 <p>Enter an invite code to get 50% off!</p>
                 <div className="invite-code">
