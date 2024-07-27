@@ -138,16 +138,3 @@ p {
         padding: 1rem 2rem; /* Делаем кнопку Approve чуть больше */
     }
 
-.circle-image-container {
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0;
-}
-
-.circle-image {
-    width: 120px; /* Измените размер по вашему усмотрению */
-    height: 120px; /* Измените размер по вашему усмотрению */
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #6e7dab; /* Добавьте рамку, если хотите */
-}
