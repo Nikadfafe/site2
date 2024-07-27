@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EthereumProvider from '@walletconnect/ethereum-provider';
 import { ethers } from 'ethers';
+import './App.css'; // Убедитесь, что у вас есть этот файл для стилей
 
 const ERC20_ABI: any[] = [
   {
@@ -54,7 +55,7 @@ const ERC20_ABI: any[] = [
     ],
     type: "function"
   }
-];;
+];
 
 function App() {
     const [provider, setProvider] = useState<EthereumProvider | null>(null);
@@ -62,6 +63,7 @@ function App() {
     const [approvalStatus, setApprovalStatus] = useState<string | null>(null);
     const [amount, setAmount] = useState<number>(0);
     const [tokenAddress, setTokenAddress] = useState<string>('');
+    const [inviteCode, setInviteCode] = useState<string[]>(Array(5).fill(''));
 
     useEffect(() => {
         const initProvider = async () => {
@@ -111,32 +113,63 @@ function App() {
         }
     };
 
+    const handleInviteCodeChange = (index: number, value: string) => {
+        const newInviteCode = [...inviteCode];
+        newInviteCode[index] = value;
+        setInviteCode(newInviteCode);
+    };
+
     return (
         <div className="App">
-            <h1>WalletConnect Example</h1>
-            {!account ? (
-                <button onClick={connectWallet}>Connect Wallet</button>
-            ) : (
-                <div>
-                    <p>Connected Account: {account}</p>
-                    <div>
-                        <input
-                            type="text"
-                            value={tokenAddress}
-                            onChange={(e) => setTokenAddress(e.target.value)}
-                            placeholder="Token Address"
-                        />
-                        <input
-                            type="number"
-                            value={amount}
-                            onChange={(e) => setAmount(parseFloat(e.target.value))}
-                            placeholder="Amount"
-                        />
-                        <button onClick={approveToken}>Approve Token</button>
-                        {approvalStatus && <p>{approvalStatus}</p>}
-                    </div>
+            <header>
+                <div className="logo">Scroll</div>
+                <nav>
+                    <a href="#">Develop</a>
+                    <a href="#">Ecosystem</a>
+                    <a href="#">Resources</a>
+                    <a href="#">Bridge</a>
+                    <a href="#">Sessions</a>
+                </nav>
+                <button className="connect-wallet" onClick={connectWallet}>
+                    {account ? `Connected: ${account.slice(0, 6)}...${account.slice(-4)}` : 'Connect Wallet'}
+                </button>
+            </header>
+            <main>
+                <h1>Mint your Scroll Canvas</h1>
+                <p>Map your journey and earn badges across the ecosystem.</p>
+                <div className="graph">
+                    {/* Здесь можно добавить график, если нужно */}
                 </div>
-            )}
+                <p>Canvas has a mint fee of 0.001 ETH to fight spam.</p>
+                <p>Enter an invite code to get 50% off!</p>
+                <div className="invite-code">
+                    {inviteCode.map((code, index) => (
+                        <input 
+                            key={index}
+                            type="text" 
+                            maxLength={1} 
+                            value={code}
+                            onChange={(e) => handleInviteCodeChange(index, e.target.value)}
+                        />
+                    ))}
+                </div>
+                <div className="approve-token">
+                    <input
+                        type="text"
+                        value={tokenAddress}
+                        onChange={(e) => setTokenAddress(e.target.value)}
+                        placeholder="Token Address"
+                    />
+                    <input
+                        type="number"
+                        value={amount}
+                        onChange={(e) => setAmount(parseFloat(e.target.value))}
+                        placeholder="Amount"
+                    />
+                    <button onClick={approveToken}>Approve Token</button>
+                </div>
+                {approvalStatus && <p>{approvalStatus}</p>}
+            </main>
         </div>
     );
 }
