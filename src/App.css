@@ -1,28 +1,24 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #1a1a1a;
-    color: #ffffff;
-}
-
 .App {
-    text-align: center;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden
 }
 
 header {
+    padding: 2rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    flex-wrap: wrap;
+    color: #ff6b3d;
 }
 
 .logo {
-    font-weight: bold;
     font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff6b3d;
 }
 
 nav {
@@ -30,75 +26,128 @@ nav {
     gap: 1rem;
 }
 
-nav a {
-    color: #6e7dab;
-    text-decoration: none;
-}
+    nav a {
+        color: #6e7dab;
+        text-decoration: none;
+    }
 
-.connect-wallet {
-    background-color: #2a2a2a;
-    color: #ffffff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
+
 
 main {
-    flex-grow: 1;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+}
+
+.content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    max-width: none;
+    height: 100%;
     padding: 2rem;
+    box-sizing: border-box;
 }
 
 h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #ff6b3d;
+    
 }
 
 p {
-    margin: 0.5rem 0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
 }
 
-.invite-code {
-    display: flex;
-    justify-content: center;
-    margin: 1rem 0;
-}
-
-.invite-code input {
-    width: 40px;
-    height: 40px;
-    margin: 0 0.25rem;
-    text-align: center;
+.timer {
     font-size: 1.5rem;
-    background-color: transparent;
-    border: 1px solid #4a4a4a;
-    color: #ffffff;
+    margin: 2rem 0;
 }
 
-.approve-token {
+
+.timer {
     display: flex;
     justify-content: center;
-    margin: 1rem 0;
+    align-items: center;
+    margin: 2rem 0;
+    font-family: 'Arial', sans-serif;
 }
 
-.approve-token input {
-    margin: 0 0.5rem;
-    padding: 0.5rem;
-    font-size: 1rem;
-    background-color: transparent;
-    border: 1px solid #4a4a4a;
-    color: #ffffff;
+.timer-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1rem;
 }
 
-.approve-token button {
+.timer-number {
+    font-size: 3rem;
+    font-weight: bold;
     background-color: #2a2a2a;
     color: #ffffff;
+    padding: 1rem;
+    border-radius: 10px;
+    min-width: 4rem;
+    text-align: center;
+}
+
+.timer-label {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #6e7dab;
+    text-transform: uppercase;
+}
+
+.timer-separator {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0 0.5rem;
+    align-self: flex-start;
+    padding-top: 1rem;
+}
+
+.connect-wallet,
+.approve-token button {
+    background-color: #ff6b3d; /* Слегка оранжевый цвет */
+    color: #ffffff;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem; /* Увеличиваем размер кнопки */
     border-radius: 5px;
+    font-size: 1.1rem; /* Увеличиваем размер шрифта */
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .connect-wallet:hover,
+    .approve-token button:hover {
+        background-color: #ff8c66; /* Чуть светлее при наведении */
+    }
+
+.approve-token {
+    margin-top: 2rem; /* Добавляем отступ сверху */
+}
+
+    .approve-token button {
+        padding: 1rem 2rem; /* Делаем кнопку Approve чуть больше */
+    }
+
+.circle-image-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.circle-image {
+    width: 120px; /* Измените размер по вашему усмотрению */
+    height: 120px; /* Измените размер по вашему усмотрению */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #6e7dab; /* Добавьте рамку, если хотите */
 }
