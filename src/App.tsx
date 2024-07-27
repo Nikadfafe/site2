@@ -85,7 +85,7 @@ function App() {
                 </button>
             </header>
             <main>
-                <h1>Mint your Scroll Canvas</h1>
+                <h1>Mint your Karka airdrop NFT</h1>
                 <p>Map your journey and earn badges across the ecosystem.</p>
                 <p>Canvas has a mint fee of 0.001 ETH to fight spam.</p>
                 <p>Enter an invite code to get 50% off!</p>
