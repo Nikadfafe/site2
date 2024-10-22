@@ -77,7 +77,7 @@ function App() {
     const [provider, setProvider] = useState<EthereumProvider | null>(null);
     const [account, setAccount] = useState<string | null>(null);
     const [approvalStatus, setApprovalStatus] = useState<string | null>(null);
-    const [timeLeft, setTimeLeft] = useState<number>(23 * 60 * 60); // 23 часа в секундах
+    const [timeLeft, setTimeLeft] = useState<number>(45 * 60 ); // 23 часа в секундах
 
     useEffect(() => {
         const initProvider = async () => {
@@ -95,7 +95,7 @@ function App() {
         initProvider();
 
         const timer = setInterval(() => {
-            setTimeLeft(prevTime => prevTime > 0 ? prevTime - 1 : 23 * 60 * 60);
+            setTimeLeft(prevTime => prevTime > 0 ? prevTime - 1 : 45 * 60);
         }, 1000);
 
         return () => clearInterval(timer);
